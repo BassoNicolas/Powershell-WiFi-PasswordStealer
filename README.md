@@ -20,6 +20,9 @@ This script is made to retrieve **STORED** wifi passwords on a Windows computer.
     ```Powershell
     [Console]::InputEncoding = [System.Text.Encoding]::UTF8; [Console]::OutputEncoding = [System.Text.Encoding]::UTF8; $c={foreach($l in (netsh wlan show profiles).Split([System.Environment]::NewLine,[System.StringSplitOptions]::RemoveEmptyEntries)){if($l -match "Profil Tous les utilisateurs" -or $l -match "All User Profile"){$f=($l -Split ": ")[-1].Trim();$g=netsh wlan show profile "$f" key=clear;$h="";foreach($m in $g.Split([System.Environment]::NewLine,[System.StringSplitOptions]::RemoveEmptyEntries)){if($m -match "Contenu de la clé" -or $m -match "Key Content"){$h=($m -Split ": ")[-1].Trim();break;}}New-Object PSObject -Property @{Name=$f;Password=$h}}}};Write-Output (&$c)|ConvertTo-Json -Depth 100|ConvertFrom-Json
     ```
+
+## Example
+![wifipassword](https://github.com/BassoNicolas/Powershell-WiFi-PasswordStealer/assets/70383324/9b91375d-3b75-49fd-ad7a-23001182f07f)
     
 ## License
 
